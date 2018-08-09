@@ -6,3 +6,5 @@ Codility/.idea/Codility.iml
 Codility/.idea/codeStyles/codeStyleConfig.xml
 Codility/.DS_Store
 .DS_Store
+*.iml
+*.xml
