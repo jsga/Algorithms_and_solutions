@@ -53,12 +53,11 @@ class Solution:
 
 S = Solution()
 S.isPalindrome(10)
-
 S.isPalindrome(101)
 S.isPalindrome(121)
 
 
-# Now do not convert to string
+# More compact
 class Solution:
     def isPalindrome(self, x):
         """
@@ -70,12 +69,13 @@ class Solution:
         if x < 0:
             return False
 
-        # convert to list
-        s = [i for i in x]
-
+        # Convert to string
+        xs = str(x)
         # Check if same as reversed
+        return xs[::-1] == xs
 
-
-x = 100
-for i in range(0,len(x)):
-    print(x[i])
+S = Solution()
+S.isPalindrome(10)
+S.isPalindrome(101)
+S.isPalindrome(121)
+S.isPalindrome(1211)
