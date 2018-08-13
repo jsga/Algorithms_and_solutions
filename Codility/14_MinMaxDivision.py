@@ -79,13 +79,13 @@ def check(A,maxB):
 
 
 # Now put together in a binary search:
-def solution(K, A):
+def solution(K,M, A):
 
 
     # Based on binary search algorithm
     # The largest sum is (worse case) sum(A)
     # The lowest (best scenario): M
-    M = max(A)
+    #M = max(A)
     if M == 0: return 0
     elif M > len(A): return M
 
