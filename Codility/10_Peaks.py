@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 A non-empty array A consisting of N integers is given.
 

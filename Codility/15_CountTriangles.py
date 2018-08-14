@@ -75,7 +75,7 @@ def solution(A):
 # Once z if fixed all the solutions in between are satisfied
 # https://app.codility.com/demo/results/training2H47SM-V9K/
 
-# Warning! Aorting the array in the opposite direction changes the conditions (see the documentation). In that case as z moves along conditions are not
+# Warning! Sorting the array in the opposite direction changes the conditions (see the documentation). In that case as z moves along conditions are not
 # necessarily satisfied.
 
 def solution(A):
