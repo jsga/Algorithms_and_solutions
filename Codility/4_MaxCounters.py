@@ -61,31 +61,61 @@ expected worst-case space complexity is O(N) (not counting the storage required 
 
 '''
 
-# Not O(N)
+# Easy solution and correct. Not performing well for big test case.
+# https://app.codility.com/demo/results/training9U3R4W-8T7/
+def solution(N,A):
+
+    # Initialize max counter and solution array
+    maxc = 0
+    sol = [0]*N
+
+    # Loop through A and record
+    for i,a in enumerate(A):
+
+        if a <= N:
+            # add a single counter and update max
+            sol[a-1] += 1 # Careful with the index
+            maxc = max(maxc, sol[a-1])
+        else:
+            # Reset all counters to the max
+            sol = [maxc]*N
+        #print(sol)
+
+    # END
+    return sol
+
+# The key idea is to keep a minimum counter, so that we know if we add 1 or instead minimum+1
+# Do not update all values when the max counter is set.
+
+# https://app.codility.com/demo/results/trainingEWDCE9-XBX/
 def solution(N, A):
 
-	# initialize counter solution
-	sol = [0]*N
-	# Max count so far
-	count_max = 0
+    sol = [0] * N
+    maximum = 0
+    minimum = 0
 
-	for i in range(0,len(A)):
-		if A[i] > N:
-			# set counters to the max
-			sol[:] = [count_max]*N
-		else:
-			# Modify sol[A[i]-1]
-			# If what we modify is equal to the max then add 1 to the max too
-			if (sol[A[i]-1]==count_max) | (count_max == 0):
-				count_max += 1
-			# Increase 1 the count
-			sol[A[i]-1] += 1
+    # step through the array of instructions
+    for a in A:
+        if a <= N:
+            # A minimum value was set
+            sol[a-1] = max(minimum,sol[a-1])
 
-		print('Iter: ' + str(i) + '  sol: ' + str(sol)  + '  count_max = ' + str(count_max))
+            # Add 1
+            sol[a-1] += 1
 
-	return sol
+            # update the maximum
+            maximum = max(sol[a-1],maximum)
+        else:
+            # an update-all instruction resets the minimum
+            minimum = maximum
 
+        print(str(sol) + ' min = ' + str(minimum) + ' max = ' + str(maximum))
 
+    # set any counters below the minimum to the minimum
+    sol = [max(s,minimum) for s in sol]
+
+    # END
+    return sol
 
 
 A = [3,4,4,6,1,4,4]
