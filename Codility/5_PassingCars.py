@@ -46,50 +46,29 @@ expected worst-case time complexity is O(N);
 expected worst-case space complexity is O(1) (not counting the storage required for input arguments).
 '''
 
-# Approach 1: 100% correct, 0% performance: n**2 complexity
-def solution_n2(A):
-    # write your code in Python 3.6
-    count = 0
-    N = len(A)
-    for i in range(N):
-        #print('iter ' + str(i) + '  A = ' + str(A))
 
-        # check max count
-        if count > 1000000000:
-            return -1
-        # now count pairs left
-        if A[0] == 1:
-            A.pop(0)
-            continue
-        else:
-            count += sum(A)
-            A.pop(0)
-    return(count)
-
-# Approach 2: 100% score
+# https://app.codility.com/demo/results/trainingT85V7D-WT5/
 def solution(A):
-    # write your code in Python 3.6
-    count = 0
-    N = len(A)
-    n_prev0 = 0 # number of previous zeroes
 
-    for i in range(N):
+    count = 0
+    n_east = 0
+
+    for a in A:
+
+        # going east a = 0 -> we add it to the pool of pairs
+        if a == 0:
+            n_east += 1
+        else:
+            # goes west: crosses with previous cars
+            count += n_east
 
         # check max count
         if count > 1000000000:
             return -1
 
-        # now count pairs left
-        if A[i] == 1 :
-            count += n_prev0
-            continue
-        else:
-            n_prev0 += 1
-    return(count)
+    return count
 
 
-
-# My own tests
 A = [0,1,0,1,1]
 solution(A)
 
