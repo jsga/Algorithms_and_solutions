@@ -65,7 +65,7 @@ def solution(A):
 	return max
 
 
-# Max slice problem (!!!!) See reading material (FUCK!)
+# Max slice problem (!!!!) See reading material
 # Mostly correct. Some issues with the indexes...
 # https://app.codility.com/demo/results/trainingRM7R5U-KVP/
 def solution(A):
