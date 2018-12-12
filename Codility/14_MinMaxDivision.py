@@ -56,14 +56,11 @@ expected worst-case space complexity is O(1) (not counting the storage required 
 
 
 # We first define the "check" condition (see Codility reading mnaterial)
-# In this case the check is whether we can divide A, such that the max sum is less than m. Return maximum number of block.
-# Each block might be of different length
 
 def check(A,maxB):
 
     nb = 1 # number of blocks. If maxB is very large nb is 1
     pos = A[0] # Start
-    s = pos # keep track of sum
 
     for el in A[1:]:
 
@@ -81,43 +78,37 @@ def check(A,maxB):
 # Now put together in a binary search:
 def solution(K,M, A):
 
-
     # Based on binary search algorithm
-    # The largest sum is (worse case) sum(A)
-    # The lowest (best scenario): M
-    #M = max(A)
-    if M == 0: return 0
-    elif M > len(A): return M
+    # The largest sum is sum(A), i.e. a single block
+    # The lowest sum: M or max(A), where the max is in a single block
 
-    sumA = sum(A)
-    m = int((sumA + M)/2) # Starting guess of the sum
-    result = [] # keep track of solution
+    max_sumB = sum(A)
+    min_sumB = max(A)
+    maxB = (max_sumB + min_sumB) // 2
+    result = 0
 
-    # Lets find the number of blocks that we can divide A in, called nb
-    # If nb is lower than K, increase m
-    # if nb is higher, decrease m
+    # Special cases
+    if K == 1: return max_sumB
+    if K >= len(A): return min_sumB
 
-    while m <= sumA and m >= M:
+    # Find the max sum of blocks by binary search
+    while min_sumB <= max_sumB:
 
-        # number of blocks that A can be divided in
-        nb = check(A,m)
+        maxB = (max_sumB + min_sumB)//2
+        nb = check(A,maxB) # min number of blocks with sum of maxB
+
+        print('maxB = ' + str(maxB) + ' nb =' + str(nb) + ' min_sumB = ' + str(min_sumB) + ' max_sumB = ' + str(max_sumB))
 
         if nb > K:
-            m += 1
-        elif nb < K:
-            m -= 1
-        else:
-            # Exactly K blocks found. Decrease m (always a better solution)
-            print('   END  '+'m = ' + str(m) + ' nb =' + str(nb))
-            if m not in result:
-                result.append(m)
-            else:
-                break
-            m -= 1
-        print('m = ' + str(m) + ' nb =' + str(nb))
+            # More number of blocks than needed.
+            # maxB should be smaller then
+            min_sumB = maxB + 1
 
-    print('****')
-    return min(result)
+        elif nb <= K:
+            max_sumB = maxB - 1
+            result = maxB
+
+    return result
 
 
 

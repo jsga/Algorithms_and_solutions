@@ -34,46 +34,33 @@ expected worst-case space complexity is O(N) (not counting the storage required 
 
 def solution(H):
 
-	# keep opened blocks with their heights
-	open = []
-	count = 0
-
-	for i in range(0,len(H)):
-
-		# Starting conditions
-		if len(open) == 0:
-			# No blocks opened. We need 1 at least
-			open.append(H[i])
-			print('Start block: ' + str(open))
-			continue
-
-		# Nothing to add or remove
-		if H[i] == open[-1]:
-			print(str(i) + ' same height no block added'+ ' open=' + str(open))
-
-		# close exisintg blocks
-		while H[i] < open[-1]:
-			# Here we close the block and count it
-			open.pop()
-			count += 1
-			print('Closed block iter ' + str(i) + ' H=' + str(H[i]) + ' open=' + str(open))
-			if len(open) == 0:
-				break
-		# If all blocks are removed re-start loop
-		if len(open) == 0:
-			open.append(H[i])
-			continue
-
-		# Add new bloks
-		if H[i] > open[-1]:
-			# We need one more block with new height
-			open.append(H[i])
-			print('New block ' + str(i) + ' H=' + str(H[i])+ ' open=' + str(open))
-
-	# END. add opened blocks
-	return (count + len(open))
+    st = []
+    count = 0
 
 
+    for h in H:
+        if len(st) == 0: #Initialize stack
+            st.append(h)
+        else:
+            # Compare h with the stack.
+			# If higher, add. If lower, trim stack and add count. If same, no action.
+            while len(st) > 0:
+                if h > st[-1]:
+                    st.append(h)
+                    break
+                elif h == st[-1]:
+                    break
+                else:
+                    aux = st.pop()
+                    count += 1
+                    continue
+
+        # If all block are closed, open new one
+        if len(st) == 0:
+            st.append(h)
+
+    # Finally count opened blocks
+    return count + len(st)
 
 
 
@@ -87,5 +74,5 @@ H = [5]
 solution(H)
 
 H = [5,1,5,1,5]
-solution(H)
+solution(H) # 4
 
